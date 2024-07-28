@@ -30,7 +30,7 @@ describe('Stub Data Mock', () => {
   });
 
 
-  it.only('should validate yield list of books ', () => {
+  it('should validate yield list of books', () => {
     cy.visit('https://rahulshettyacademy.com/angularAppdemo');
 
     cy.intercept({
@@ -62,7 +62,26 @@ describe('Stub Data Mock', () => {
     cy.wait('@boookRetrievals').then(({request, response}) => {
       cy.get('tbody tr').should('have.length', response.body.length);
     })
+
+    // "Only 1 book" message does not appear
+    cy.contains('Oops only 1 Book available').should('not.exist');
     
+  });
+
+
+  it.only('should return message that user is not authorized', () => {
+    cy.visit('https://rahulshettyacademy.com/angularAppdemo');
+
+    cy.intercept('GET', 'https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=shetty', (request) => {
+      request.url = 'https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=malhotra';
+      request.continue((res) => {
+        //expect(res.statusCode).to.equal('403');
+      });  
+    }).as('invalidUser');
+    
+    cy.contains('Library').click();
+
+    cy.wait('@invalidUser');
 
   });
 
