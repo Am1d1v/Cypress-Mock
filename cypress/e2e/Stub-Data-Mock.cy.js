@@ -85,7 +85,7 @@ describe('Stub Data Mock', () => {
 
   });
 
-  it.only('should return message that the book already exist', () => {
+  it('should return message that the book already exist', () => {
     cy.request('POST', 'http://216.10.245.166/Library/Addbook.php', {
       "name": 'New book in the library',
       "isbn": "abc",
@@ -95,7 +95,17 @@ describe('Stub Data Mock', () => {
       expect(response.body.Msg).to.equal('Book Already Exists');
     });
 
-    
+  });
+
+  it.only('should add new book in the Library', () => {
+    cy.request('POST', 'http://216.10.245.166/Library/Addbook.php', {
+      "name": 'New book in the library',
+      "isbn": "zxcvbnm",
+      "aisle": "1q2w3e4r5t6y",
+      "author": 'Di'
+    }).then(response => {
+      expect(response.body.Msg).to.equal('successfully added');
+    });
 
   });
 
