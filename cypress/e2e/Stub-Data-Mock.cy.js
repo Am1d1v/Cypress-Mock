@@ -69,7 +69,7 @@ describe('Stub Data Mock', () => {
   });
 
 
-  it.only('should return message that user is not authorized', () => {
+  it('should return message that user is not authorized', () => {
     cy.visit('https://rahulshettyacademy.com/angularAppdemo');
 
     cy.intercept('GET', 'https://rahulshettyacademy.com/Library/GetBook.php?AuthorName=shetty', (request) => {
@@ -82,6 +82,18 @@ describe('Stub Data Mock', () => {
     cy.contains('Library').click();
 
     cy.wait('@invalidUser');
+
+  });
+
+  it.only('should handle API call', () => {
+    cy.request('POST', 'http://216.10.245.166/Library/Addbook.php', {
+      "name": 'New book in the library',
+      "isbn": "abc",
+      "aisle": "123",
+      "author": 'Di'
+    });
+
+    
 
   });
 
