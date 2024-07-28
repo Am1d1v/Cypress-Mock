@@ -85,12 +85,14 @@ describe('Stub Data Mock', () => {
 
   });
 
-  it.only('should handle API call', () => {
+  it.only('should return message that the book already exist', () => {
     cy.request('POST', 'http://216.10.245.166/Library/Addbook.php', {
       "name": 'New book in the library',
       "isbn": "abc",
       "aisle": "123",
       "author": 'Di'
+    }).then(response => {
+      expect(response.body.Msg).to.equal('Book Already Exists');
     });
 
     
