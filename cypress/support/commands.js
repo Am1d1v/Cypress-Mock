@@ -33,7 +33,11 @@ Cypress.Commands.add('JWTLogin', () => {
         userPassword: "Dd1234567890"
     }).then(response => {
         expect(response.status).to.eql(200);
+
+        // Set JWT Token as Cypress environmental variable
         Cypress.env('token', response.body.token)
+
+        // Set JWT Token in local storage
         localStorage.setItem('token', Cypress.env('token'));
     });
 
