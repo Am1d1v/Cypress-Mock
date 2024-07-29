@@ -23,3 +23,21 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+
+// Session token injection into local storage
+Cypress.Commands.add('JWTLogin', () => {
+
+    cy.request('POST', 'https://rahulshettyacademy.com/api/ecom/auth/login', {
+        userEmail: "dimaa@gmail.com", 
+        userPassword: "Dd1234567890"
+    }).then(response => {
+        expect(response.status).to.eql(200);
+        Cypress.env('token', response.body.token)
+        localStorage.setItem('token', Cypress.env('token'));
+    });
+
+    cy.visit('https://rahulshettyacademy.com/client');
+
+});
+
