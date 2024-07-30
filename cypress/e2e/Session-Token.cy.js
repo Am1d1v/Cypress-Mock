@@ -56,6 +56,11 @@ describe('JWT Session Token', () => {
         // Item was successfully purchased
         cy.contains('Thankyou for the order.');
 
+        cy.wait(3000);
+
+        // Download purchase data in CSV Format
+        cy.get('tbody > :nth-child(4) > .btn').click();
+
         });
 
     });
